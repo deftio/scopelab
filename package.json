@@ -1,0 +1,16 @@
+{
+  "name": "usb-endoscope",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test test/filters.test.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "Live USB endoscope viewer with filters, histograms and captures (bitwrench UI)",
+  "dependencies": {
+    "bitwrench": "^2.1.14"
+  },
+  "private": true
+}
