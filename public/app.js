@@ -43,24 +43,14 @@
     {
       'body': { margin: '0' },
       '.endo_hidden': { display: 'none !important' },
-      '.endo_layout': { display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 390px', gap: '16px', padding: '16px', alignItems: 'start' },
-      '@media (max-width: 1100px)': { '.endo_layout': { gridTemplateColumns: 'minmax(0, 1fr)' } },
-      '.endo_main': { display: 'flex', flexDirection: 'column', gap: '16px', minWidth: '0' },
-      '.endo_side': { minWidth: '0', position: 'sticky', top: '12px' },
       '.endo_viewer': { position: 'relative', background: '#000', borderRadius: '10px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' },
-      '.endo_view': { display: 'block', width: '100%', height: 'auto', cursor: 'crosshair', imageRendering: 'auto' },
       '.endo_viewer:fullscreen': { borderRadius: '0' },
-      '.endo_viewer:fullscreen .endo_view': { width: 'auto', height: 'auto', maxWidth: '100vw', maxHeight: '100vh' },
       '.endo_placeholder': { position: 'absolute', inset: '0', display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'center', justifyContent: 'center', color: '#9aa4b2', textAlign: 'center', padding: '16px' },
       '.endo_tags': { position: 'absolute', top: '10px', right: '10px', display: 'flex', gap: '6px' },
       '.endo_probe': { position: 'absolute', left: '10px', bottom: '10px', font: '12px ui-monospace, Menlo, monospace', color: '#e6edf3', background: 'rgba(0,0,0,0.55)', padding: '3px 7px', borderRadius: '4px', pointerEvents: 'none' },
       '.endo_flash': { animation: 'endo_flash 0.25s ease-out' },
       '@keyframes endo_flash': { '0%': { filter: 'brightness(2.2)' }, '100%': { filter: 'brightness(1)' } },
-      '.endo_toolbar': { display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center', marginTop: '10px' },
-      '.endo_toolbar .bw_bccl_form_control': { width: 'auto' },
       '.endo_spacer': { flex: '1' },
-      '.endo_charts': { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '16px' },
-      '.endo_chart': { width: '100%', height: '170px', display: 'block', background: 'rgba(127,127,127,0.06)', borderRadius: '6px' },
       '.endo_h_r': { fill: 'rgba(239,68,68,0.35)', stroke: 'rgb(239,68,68)', strokeWidth: '0.6' },
       '.endo_h_g': { fill: 'rgba(34,197,94,0.30)', stroke: 'rgb(34,197,94)', strokeWidth: '0.6' },
       '.endo_h_b': { fill: 'rgba(59,130,246,0.30)', stroke: 'rgb(59,130,246)', strokeWidth: '0.6' },
@@ -78,7 +68,6 @@
       '.endo_field .bw_bccl_form_control': { width: 'auto', minWidth: '140px' },
       '.endo_row': { display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap', margin: '6px 0' },
       '.endo_row > .bw_bccl_form_control': { flex: '1', width: 'auto', minWidth: '0' },
-      '.endo_gallery': { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '12px' },
       '.endo_cap img, .endo_cap video': { display: 'block', width: '100%', aspectRatio: '4 / 3', objectFit: 'cover', background: '#000', cursor: 'zoom-in' },
       '.endo_cap_btns': { display: 'flex', flexWrap: 'wrap', gap: '6px', padding: '0 8px 8px' },
       '.bw_bccl_table.endo_compact > thead > tr > *, .bw_bccl_table.endo_compact > tbody > tr > *': { padding: '4px 8px', fontSize: '0.8rem', whiteSpace: 'nowrap' },
@@ -88,8 +77,55 @@
       '.endo_toasts .bw_bccl_toast': { position: 'static', margin: '0' },
       '.endo_kv': { display: 'grid', gridTemplateColumns: 'max-content 1fr', gap: '2px 12px', fontSize: '0.85rem', margin: '0' },
       '.endo_kv dd': { margin: '0', fontFamily: 'ui-monospace, Menlo, monospace', wordBreak: 'break-all' },
-      '.endo_side .bw_bccl_tab_content, .endo_side .bw_bccl_tabs_content': { maxHeight: 'calc(100vh - 140px)', overflowY: 'auto' },
+      // Narrow screens: a normal scrolling page.
+      '.endo_layout': { display: 'grid', gridTemplateColumns: 'minmax(0, 1fr)', gap: '12px', padding: '12px' },
+      '.endo_main': { display: 'flex', flexDirection: 'column', gap: '10px', minWidth: '0' },
+      '.endo_side': { minWidth: '0' },
+      '.endo_view': { display: 'block', width: '100%', height: 'auto', cursor: 'crosshair' },
+      '.endo_viewer:fullscreen .endo_view': { width: '100%', height: '100%', objectFit: 'contain' },
+      '.endo_toolbar': { display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' },
+      '.endo_strip': { display: 'grid', gridTemplateColumns: 'minmax(0, 1fr)', gap: '10px' },
+      '.endo_panel': { margin: '0' },
+      '.endo_panel > .bw_bccl_card_body': { padding: '8px 10px' },
+      '.endo_panel_head': { display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap', marginBottom: '6px', fontSize: '0.85rem' },
+      '.endo_panel_head .bw_bccl_form_check': { margin: '0' },
+      '.endo_panel_head .bw_bccl_form_control': { width: 'auto', padding: '2px 6px', fontSize: '0.85rem' },
+      '.endo_panel_title': { fontWeight: '700', marginRight: 'auto' },
+      '.endo_hist_body': { display: 'grid', gridTemplateColumns: 'minmax(0, 1fr)', gap: '10px' },
+      '.endo_stats': { overflow: 'auto' },
+      '.endo_chart': { width: '100%', height: '150px', display: 'block', background: 'rgba(127,127,127,0.06)', borderRadius: '6px' },
+      '.endo_gallery': { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: '10px' },
+      // Desktop: the whole app fits the window. The video takes the leftover
+      // height, the charts are a fixed strip under it, and the side panel scrolls itself.
+      '@media (min-width: 1100px) and (min-height: 620px)': {
+        '.endo_app': { height: '100dvh', display: 'flex', flexDirection: 'column', overflow: 'hidden' },
+        '.endo_layout': { flex: '1', minHeight: '0', gridTemplateColumns: 'minmax(0, 1fr) 380px' },
+        '.endo_main': { display: 'grid', gridTemplateRows: 'minmax(0, 1fr) auto auto', minHeight: '0' },
+        '.endo_viewer': { minHeight: '0', height: '100%' },
+        '.endo_view': { width: '100%', height: '100%', objectFit: 'contain' },
+        '.endo_strip': { gridTemplateColumns: 'minmax(0, 2fr) minmax(0, 1fr)', height: '210px' },
+        '.endo_strip > *': { minHeight: '0', height: '100%' },
+        '.endo_panel > .bw_bccl_card_body': { height: '100%', display: 'flex', flexDirection: 'column', boxSizing: 'border-box' },
+        '.endo_fill': { flex: '1', minHeight: '0' },
+        '.endo_hist_body': { gridTemplateColumns: 'minmax(0, 1fr) auto' },
+        '.endo_chart': { height: '100%' },
+        '.endo_side': { minHeight: '0', height: '100%' },
+        '.endo_side > .bw_bccl_tabs': { height: '100%', display: 'flex', flexDirection: 'column' },
+        '.endo_side .bw_bccl_tab_content': { flex: '1', minHeight: '0', overflowY: 'auto', paddingRight: '4px' }
+      },
+      // Picture mode: the image fills the window; controls hide behind a
+      // floating bar that appears on hover (also used in browser fullscreen).
+      '.endo_app.endo_focus': { height: '100dvh', display: 'flex', flexDirection: 'column', overflow: 'hidden' },
+      '.endo_app.endo_focus .endo_header, .endo_app.endo_focus .endo_side, .endo_app.endo_focus .endo_toolbar, .endo_app.endo_focus .endo_strip': { display: 'none' },
+      '.endo_app.endo_focus .endo_layout': { flex: '1', minHeight: '0', padding: '0', gap: '0', gridTemplateColumns: 'minmax(0, 1fr)' },
+      '.endo_app.endo_focus .endo_main': { display: 'grid', gridTemplateRows: 'minmax(0, 1fr)', minHeight: '0' },
+      '.endo_app.endo_focus .endo_viewer': { height: '100%', minHeight: '0', borderRadius: '0' },
+      '.endo_app.endo_focus .endo_view': { width: '100%', height: '100%', objectFit: 'contain' },
+      '.endo_float': { position: 'absolute', left: '50%', bottom: '14px', transform: 'translateX(-50%)', display: 'none', gap: '6px', padding: '6px', borderRadius: '10px', background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(6px)' },
+      '.endo_app.endo_focus .endo_viewer:hover .endo_float, .endo_app.endo_focus .endo_float:focus-within, .endo_viewer:fullscreen:hover .endo_float': { display: 'flex' },
       '.endo_keys': { fontSize: '0.8rem' },
+      '.endo_toolbar .bw_bccl_form_control': { width: 'auto', padding: '3px 8px', fontSize: '0.85rem' },
+      '@media (max-width: 1500px)': { '.endo_keys': { display: 'none' } },
       '.endo_keys kbd': { fontFamily: 'ui-monospace, Menlo, monospace', border: '1px solid rgba(127,127,127,0.5)', borderRadius: '3px', padding: '0 4px' }
     },
     themeCSS(styles.palette),
@@ -121,6 +157,7 @@
     chain: [],
     hist: { source: 'output', log: false, r: true, g: true, b: true, l: true },
     profile: { dir: 'horizontal', x: 0.5, y: 0.5 },
+    picture: false,
     snapSource: 'output', snapFormat: 'png',
     recorder: null, recStart: 0,
     captures: [], serverOk: false, serverSave: false, serverDir: '',
@@ -199,107 +236,111 @@
           bw.makeBadge({ id: 'st_proc', text: '0.0 ms', variant: 'secondary' }),
           bw.makeBadge({ id: 'st_cam', text: 'no camera', variant: 'secondary' })
         ] },
+        bw.makeButton({ id: 'btn_caps', text: '\uD83D\uDDBC 0', size: 'sm', variant: 'outline_secondary', onclick: function () { showCaptures(); } }),
         smallBtn('Light / dark', function () { bw.toggleThemeMode(); }, 'outline_secondary')
       ]
     };
   }
 
-  function viewerCard() {
-    return bw.makeCard({
-      content: [
-        { t: 'div', a: { id: 'endo_viewer', class: 'endo_viewer endo_idle' }, c: [
-          { t: 'canvas', a: { id: 'endo_view', class: 'endo_view endo_hidden', width: 640, height: 480, onmousemove: onProbe, onmouseleave: function () { bw.addClass('endo_probe', 'endo_hidden'); }, onclick: onViewClick, ondblclick: toggleFullscreen } },
-          { t: 'div', a: { id: 'endo_placeholder', class: 'endo_placeholder' }, c: [
-            { t: 'div', a: { style: 'font-size:3rem' }, c: '◉' },
-            { t: 'div', a: { id: 'endo_ph_text' }, c: 'Plug in the USB endoscope, then start the camera.' },
-            bw.makeButton({ text: 'Start camera', variant: 'primary', onclick: function () { start(); } })
-          ] },
-          { t: 'div', a: { class: 'endo_tags' }, c: [
-            bw.makeBadge({ id: 'tag_frozen', text: 'FROZEN', variant: 'info', class: 'endo_hidden' }),
-            bw.makeBadge({ id: 'tag_rec', text: '● REC 00:00', variant: 'danger', class: 'endo_hidden' })
-          ] },
-          { t: 'div', a: { id: 'endo_probe', class: 'endo_probe endo_hidden' }, c: '' },
-          { t: 'video', a: { id: 'endo_video', class: 'endo_hidden', autoplay: true, muted: true, playsinline: true } }
-        ] },
-        { t: 'div', a: { class: 'endo_toolbar' }, c: [
-          bw.makeButton({ id: 'btn_start', text: '▶ Start', variant: 'success', onclick: function () { S.running ? stop() : start(); } }),
-          bw.makeButton({ id: 'btn_snap', text: '📷 Snapshot', variant: 'primary', onclick: snapshot }),
-          bw.makeButton({ id: 'btn_rec', text: '⏺ Record', variant: 'danger', onclick: toggleRecord }),
-          bw.makeButton({ id: 'btn_freeze', text: '❄ Freeze', variant: 'outline_secondary', onclick: toggleFreeze }),
-          bw.makeButton({ text: '⛶ Fullscreen', variant: 'outline_secondary', onclick: toggleFullscreen }),
-          { t: 'span', a: { class: 'endo_spacer' } },
-          { t: 'span', a: { class: 'endo_muted' }, c: 'Capture' },
-          select([{ value: 'output', text: 'processed' }, { value: 'raw', text: 'raw' }, { value: 'view', text: 'as shown' }], S.snapSource, function (v) { S.snapSource = v; }),
-          select([{ value: 'png', text: 'PNG' }, { value: 'jpeg', text: 'JPEG' }], S.snapFormat, function (v) { S.snapFormat = v; })
-        ] },
-        { t: 'div', a: { class: 'endo_muted endo_keys', style: 'margin-top:8px' }, c: [
-          'Keys: ', { t: 'kbd', c: 'Space' }, ' snapshot · ', { t: 'kbd', c: 'R' }, ' record · ', { t: 'kbd', c: 'F' }, ' freeze · ',
-          { t: 'kbd', c: 'Enter' }, ' fullscreen · click image to move the profile line · double-click for fullscreen'
-        ] }
-      ]
-    });
+  function viewerPane() {
+    return { t: 'div', a: { id: 'endo_viewer', class: 'endo_viewer endo_idle' }, c: [
+      { t: 'canvas', a: { id: 'endo_view', class: 'endo_view endo_hidden', width: 640, height: 480, onmousemove: onProbe, onmouseleave: function () { bw.addClass('endo_probe', 'endo_hidden'); }, onclick: onViewClick, ondblclick: toggleFullscreen } },
+      { t: 'div', a: { id: 'endo_placeholder', class: 'endo_placeholder' }, c: [
+        { t: 'div', a: { style: 'font-size:3rem' }, c: '◉' },
+        { t: 'div', a: { id: 'endo_ph_text' }, c: 'Plug in the USB endoscope, then start the camera.' },
+        bw.makeButton({ text: 'Start camera', variant: 'primary', onclick: function () { start(); } })
+      ] },
+      { t: 'div', a: { class: 'endo_tags' }, c: [
+        bw.makeBadge({ id: 'tag_frozen', text: 'FROZEN', variant: 'info', class: 'endo_hidden' }),
+        bw.makeBadge({ id: 'tag_rec', text: '● REC 00:00', variant: 'danger', class: 'endo_hidden' })
+      ] },
+      { t: 'div', a: { id: 'endo_probe', class: 'endo_probe endo_hidden' }, c: '' },
+      { t: 'div', a: { class: 'endo_float' }, c: [
+        smallBtn('\uD83D\uDCF7', snapshot, 'light', 'Snapshot (Space)'),
+        smallBtn('\u23FA', toggleRecord, 'danger', 'Start / stop recording (R)'),
+        smallBtn('\u2744', toggleFreeze, 'light', 'Freeze / resume (F)'),
+        smallBtn('\u26F6', toggleFullscreen, 'light', 'Browser fullscreen (Enter)'),
+        smallBtn('\u2715', function () { setPictureMode(false); if (document.fullscreenElement) document.exitFullscreen(); }, 'light', 'Show controls (Esc)')
+      ] },
+      { t: 'video', a: { id: 'endo_video', class: 'endo_hidden', autoplay: true, muted: true, playsinline: true } }
+    ] };
   }
 
-  function histCard() {
+  function toolbar() {
+    return { t: 'div', a: { class: 'endo_toolbar' }, c: [
+      bw.makeButton({ id: 'btn_start', text: '▶ Start', variant: 'success', size: 'sm', onclick: function () { S.running ? stop() : start(); } }),
+      bw.makeButton({ id: 'btn_snap', text: '📷 Snapshot', variant: 'primary', size: 'sm', onclick: snapshot }),
+      bw.makeButton({ id: 'btn_rec', text: '⏺ Record', variant: 'danger', size: 'sm', onclick: toggleRecord }),
+      bw.makeButton({ id: 'btn_freeze', text: '❄ Freeze', variant: 'outline_secondary', size: 'sm', onclick: toggleFreeze }),
+      bw.makeButton({ text: '\u2922 Picture', variant: 'outline_secondary', size: 'sm', onclick: function () { setPictureMode(true); } }),
+      bw.makeButton({ text: '\u26F6 Fullscreen', variant: 'outline_secondary', size: 'sm', onclick: toggleFullscreen }),
+      bw.makeButton({ id: 'btn_charts', text: '📈 Charts', variant: 'outline_secondary', size: 'sm', onclick: function () {
+        var hide = !bw.hasClass('endo_strip', 'endo_hidden');
+        bw.toggleClass('endo_strip', 'endo_hidden', hide);
+      } }),
+      { t: 'span', a: { class: 'endo_spacer' } },
+      { t: 'span', a: { class: 'endo_muted endo_keys', title: 'Space: snapshot · R: record · F: freeze · P: picture mode · Enter: fullscreen · click the image to move the profile line · double-click for fullscreen' }, c: [
+        { t: 'kbd', c: 'Space' }, ' ', { t: 'kbd', c: 'R' }, ' ', { t: 'kbd', c: 'F' }, ' ', { t: 'kbd', c: 'P' }, ' ', { t: 'kbd', c: 'Enter' }
+      ] },
+      { t: 'span', a: { class: 'endo_muted' }, c: 'Capture' },
+      select([{ value: 'output', text: 'processed' }, { value: 'raw', text: 'raw' }, { value: 'view', text: 'as shown' }], S.snapSource, function (v) { S.snapSource = v; }),
+      select([{ value: 'png', text: 'PNG' }, { value: 'jpeg', text: 'JPEG' }], S.snapFormat, function (v) { S.snapFormat = v; })
+    ] };
+  }
+
+  function panel(title, controls, body) {
+    return bw.makeCard({ class: 'endo_panel', content: [
+      { t: 'div', a: { class: 'endo_panel_head' }, c: [{ t: 'span', a: { class: 'endo_panel_title' }, c: title }].concat(controls) },
+      body
+    ] });
+  }
+
+  function histPanel() {
     var grid = [64, 128, 192].map(function (x) { return { t: 'line', a: { class: 'endo_grid_line', x1: x, y1: 0, x2: x, y2: 100 } }; })
       .concat([25, 50, 75].map(function (y) { return { t: 'line', a: { class: 'endo_grid_line', x1: 0, y1: y, x2: 255, y2: y } }; }));
-    return bw.makeCard({
-      title: 'Histogram',
-      content: [
-        { t: 'div', a: { class: 'endo_opts' }, c: [
-          select([{ value: 'output', text: 'processed' }, { value: 'raw', text: 'raw' }], S.hist.source, function (v) { S.hist.source = v; }),
-          sw('R', S.hist.r, function (v) { S.hist.r = v; bw.toggleClass('h_r', 'endo_hidden', !v); }),
-          sw('G', S.hist.g, function (v) { S.hist.g = v; bw.toggleClass('h_g', 'endo_hidden', !v); }),
-          sw('B', S.hist.b, function (v) { S.hist.b = v; bw.toggleClass('h_b', 'endo_hidden', !v); }),
-          sw('Luma', S.hist.l, function (v) { S.hist.l = v; bw.toggleClass('h_l', 'endo_hidden', !v); }),
-          sw('Log', S.hist.log, function (v) { S.hist.log = v; })
-        ] },
-        { t: 'svg', a: { class: 'endo_chart', viewBox: '0 0 255 100', preserveAspectRatio: 'none' }, c: grid.concat([
-          { t: 'polygon', a: { id: 'h_r', class: 'endo_h_r', points: '0,100 255,100' } },
-          { t: 'polygon', a: { id: 'h_g', class: 'endo_h_g', points: '0,100 255,100' } },
-          { t: 'polygon', a: { id: 'h_b', class: 'endo_h_b', points: '0,100 255,100' } },
-          { t: 'polyline', a: { id: 'h_l', class: 'endo_h_l', points: '0,100 255,100' } }
-        ]) },
-        { t: 'div', a: { id: 'hist_stats', style: 'margin-top:8px; overflow-x:auto' } }
-      ]
-    });
+    return panel('Histogram', [
+      select([{ value: 'output', text: 'processed' }, { value: 'raw', text: 'raw' }], S.hist.source, function (v) { S.hist.source = v; }),
+      sw('R', S.hist.r, function (v) { S.hist.r = v; bw.toggleClass('h_r', 'endo_hidden', !v); }),
+      sw('G', S.hist.g, function (v) { S.hist.g = v; bw.toggleClass('h_g', 'endo_hidden', !v); }),
+      sw('B', S.hist.b, function (v) { S.hist.b = v; bw.toggleClass('h_b', 'endo_hidden', !v); }),
+      sw('Luma', S.hist.l, function (v) { S.hist.l = v; bw.toggleClass('h_l', 'endo_hidden', !v); }),
+      sw('Log', S.hist.log, function (v) { S.hist.log = v; })
+    ], { t: 'div', a: { class: 'endo_hist_body endo_fill' }, c: [
+      { t: 'svg', a: { class: 'endo_chart', viewBox: '0 0 255 100', preserveAspectRatio: 'none' }, c: grid.concat([
+        { t: 'polygon', a: { id: 'h_r', class: 'endo_h_r', points: '0,100 255,100' } },
+        { t: 'polygon', a: { id: 'h_g', class: 'endo_h_g', points: '0,100 255,100' } },
+        { t: 'polygon', a: { id: 'h_b', class: 'endo_h_b', points: '0,100 255,100' } },
+        { t: 'polyline', a: { id: 'h_l', class: 'endo_h_l', points: '0,100 255,100' } }
+      ]) },
+      { t: 'div', a: { id: 'hist_stats', class: 'endo_stats' } }
+    ] });
   }
 
-  function profileCard() {
+  function profilePanel() {
     var grid = [25, 50, 75].map(function (y) { return { t: 'line', a: { class: 'endo_grid_line', x1: 0, y1: y, x2: 255, y2: y } }; });
-    return bw.makeCard({
-      title: 'Line profile',
-      content: [
-        { t: 'div', a: { class: 'endo_opts' }, c: [
-          select([{ value: 'horizontal', text: 'horizontal (row)' }, { value: 'vertical', text: 'vertical (column)' }], S.profile.dir, function (v) { S.profile.dir = v; }),
-          sw('Show line on image', S.ov.profile, function (v) { S.ov.profile = v; }),
-          { t: 'span', a: { id: 'prof_pos', class: 'endo_muted' }, c: '' }
-        ] },
-        { t: 'svg', a: { class: 'endo_chart', viewBox: '0 0 255 100', preserveAspectRatio: 'none' }, c: grid.concat([
-          { t: 'polyline', a: { id: 'p_r', class: 'endo_p_r', points: '' } },
-          { t: 'polyline', a: { id: 'p_g', class: 'endo_p_g', points: '' } },
-          { t: 'polyline', a: { id: 'p_b', class: 'endo_p_b', points: '' } },
-          { t: 'polyline', a: { id: 'p_l', class: 'endo_h_l', points: '' } }
-        ]) },
-        { t: 'div', a: { class: 'endo_muted', style: 'margin-top:8px' }, c: 'Intensity (0–255) along the dashed line. Click the image to move it.' }
-      ]
-    });
+    return panel('Line profile', [
+      { t: 'span', a: { id: 'prof_pos', class: 'endo_muted' }, c: '' },
+      select([{ value: 'horizontal', text: 'row' }, { value: 'vertical', text: 'column' }], S.profile.dir, function (v) { S.profile.dir = v; }),
+      sw('Line', S.ov.profile, function (v) { S.ov.profile = v; })
+    ], { t: 'svg', a: { class: 'endo_chart endo_fill', viewBox: '0 0 255 100', preserveAspectRatio: 'none' }, c: grid.concat([
+      { t: 'title', c: 'Intensity (0–255) along the dashed line. Click the image to move it.' },
+      { t: 'polyline', a: { id: 'p_r', class: 'endo_p_r', points: '' } },
+      { t: 'polyline', a: { id: 'p_g', class: 'endo_p_g', points: '' } },
+      { t: 'polyline', a: { id: 'p_b', class: 'endo_p_b', points: '' } },
+      { t: 'polyline', a: { id: 'p_l', class: 'endo_h_l', points: '' } }
+    ]) });
   }
 
-  function galleryCard() {
-    return bw.makeCard({
-      title: 'Captures',
-      content: [
-        { t: 'div', a: { class: 'endo_opts' }, c: [
-          { t: 'span', a: { id: 'save_box' }, c: '' },
-          { t: 'span', a: { class: 'endo_spacer' } },
-          smallBtn('Download all', downloadAll),
-          smallBtn('Clear all', clearCaptures, 'outline_danger')
-        ] },
-        { t: 'div', a: { id: 'gallery_empty', class: 'endo_muted' }, c: 'No captures yet. Snapshots and recordings appear here.' },
-        { t: 'div', a: { id: 'gallery', class: 'endo_gallery' } }
-      ]
-    });
+  function capturesPanel() {
+    return { t: 'div', c: [
+      { t: 'div', a: { class: 'endo_row' }, c: [{ t: 'span', a: { id: 'save_box' }, c: '' }] },
+      { t: 'div', a: { class: 'endo_row' }, c: [
+        smallBtn('Download all', downloadAll),
+        smallBtn('Clear all', clearCaptures, 'outline_danger')
+      ] },
+      { t: 'div', a: { id: 'gallery_empty', class: 'endo_muted', style: 'margin-top:8px' }, c: 'No captures yet. Snapshots (Space) and recordings (R) appear here.' },
+      { t: 'div', a: { id: 'gallery', class: 'endo_gallery', style: 'margin-top:8px' } }
+    ] };
   }
 
   // --- side panel: filters
@@ -605,22 +646,24 @@
 
   function sidePanel() {
     return bw.makeTabs({
+      id: 'side_tabs',
       tabs: [
         { label: 'Filters', content: filtersPanel() },
         { label: 'View', content: { t: 'div', a: { id: 'view_panel' }, c: viewPanel() } },
         { label: 'Camera', content: cameraPanel() },
-        { label: 'USB', content: usbPanel() }
+        { label: 'USB', content: usbPanel() },
+        { label: 'Captures', content: capturesPanel() }
       ]
     });
   }
 
-  bw.mount('#app', { t: 'div', c: [
+  bw.mount('#app', { t: 'div', a: { class: 'endo_app' }, c: [
     header(),
     { t: 'div', a: { class: 'endo_layout' }, c: [
       { t: 'div', a: { class: 'endo_main' }, c: [
-        viewerCard(),
-        { t: 'div', a: { class: 'endo_charts' }, c: [histCard(), profileCard()] },
-        galleryCard()
+        viewerPane(),
+        toolbar(),
+        { t: 'div', a: { id: 'endo_strip', class: 'endo_strip' }, c: [histPanel(), profilePanel()] }
       ] },
       { t: 'aside', a: { class: 'endo_side' }, c: sidePanel() }
     ] },
@@ -662,7 +705,7 @@
 
   function start() {
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-      toast('Camera access needs a secure context. Open http://localhost:8090 (run: node server.js).', 'danger', 'No camera API');
+      toast('Camera access needs a secure page: open this over https:// or http://localhost (npm start).', 'danger', 'No camera API');
       return Promise.resolve();
     }
     stopStream();
@@ -920,15 +963,20 @@
 
   // ------------------------------------------------------------------ pointer tools
 
+  /** Pointer -> canvas pixel, allowing for object-fit: contain letterboxing. Null outside the image. */
   function canvasPoint(e) {
-    var r = dom.view.getBoundingClientRect();
-    return { x: (e.clientX - r.left) / r.width * dom.view.width, y: (e.clientY - r.top) / r.height * dom.view.height };
+    var r = dom.view.getBoundingClientRect(), cw = dom.view.width, ch = dom.view.height;
+    var k = Math.min(r.width / cw, r.height / ch), ox = r.left + (r.width - cw * k) / 2, oy = r.top + (r.height - ch * k) / 2;
+    var x = (e.clientX - ox) / k, y = (e.clientY - oy) / k;
+    return (x < 0 || y < 0 || x >= cw || y >= ch) ? null : { x: x, y: y };
   }
 
   /** Map a canvas point to (image, x, y); in side-by-side, the right half is the processed image. */
   function pick(e) {
     if (!S.lastRaw) return null;
-    var p = canvasPoint(e), w = S.lastRaw.w, img = S.lastOut, x = p.x;
+    var p = canvasPoint(e);
+    if (!p) return null;
+    var w = S.lastRaw.w, img = S.lastOut, x = p.x;
     if (S.split === 'side') { if (x < w) img = S.lastRaw; else x -= w; }
     else if (S.split === 'wipe' && x < w * S.wipe / 100) img = S.lastRaw;
     x = Math.max(0, Math.min(w - 1, Math.floor(x)));
@@ -938,7 +986,7 @@
 
   function onProbe(e) {
     var q = pick(e);
-    if (!q) return;
+    if (!q) { bw.addClass('endo_probe', 'endo_hidden'); return; }
     var d = q.img.data, i = (q.y * q.img.w + q.x) * 4;
     var l = Math.round(0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2]);
     bw.removeClass('endo_probe', 'endo_hidden');
@@ -950,6 +998,17 @@
     if (!q) return;
     S.profile.x = q.x / Math.max(1, S.lastRaw.w - 1);
     S.profile.y = q.y / Math.max(1, S.lastRaw.h - 1);
+  }
+
+  function setPictureMode(on) {
+    S.picture = !!on;
+    bw.toggleClass('.endo_app', 'endo_focus', S.picture);
+  }
+
+  function showCaptures() {
+    setPictureMode(false);
+    var tabs = bw.el('#side_tabs');
+    if (tabs && tabs.bw) tabs.bw.setActiveTab(4);
   }
 
   function toggleFullscreen() {
@@ -1045,7 +1104,7 @@
 
   function saveToServer(c) {
     bw.patch(c.id + '_saved', 'saving…');
-    fetch('/api/save?name=' + encodeURIComponent(c.name), { method: 'POST', body: c.blob })
+    fetch('api/save?name=' + encodeURIComponent(c.name), { method: 'POST', body: c.blob })
       .then(function (r) { return r.json(); })
       .then(function (j) {
         if (!j.ok) throw new Error(j.error || 'save failed');
@@ -1081,6 +1140,7 @@
       update: function () {}
     });
     bw.toggleClass('gallery_empty', 'endo_hidden', S.captures.length > 0);
+    bw.patch('btn_caps', '\uD83D\uDDBC ' + S.captures.length);
   }
 
   function removeCapture(c) {
@@ -1113,7 +1173,7 @@
   function renderSaveBox() {
     bw.mount('#save_box', S.serverOk
       ? sw('Also save to ' + S.serverDir, S.serverSave, function (v) { S.serverSave = v; })
-      : { t: 'span', a: { class: 'endo_muted' }, c: 'Captures stay in the browser (run node server.js to also save them to disk).' });
+      : { t: 'span', a: { class: 'endo_muted' }, c: 'Captures stay in this browser \u2014 use \u2B07 to download them. (Running locally with npm start also saves them to ./captures.)' });
   }
 
   // ------------------------------------------------------------------ wiring
@@ -1129,6 +1189,8 @@
     else if (e.key === 'r' || e.key === 'R') toggleRecord();
     else if (e.key === 'f' || e.key === 'F') toggleFreeze();
     else if (e.key === 'Enter') toggleFullscreen();
+    else if (e.key === 'p' || e.key === 'P') setPictureMode(!S.picture);
+    else if (e.key === 'Escape' && S.picture && !document.fullscreenElement) setPictureMode(false);
   });
 
   if (navigator.mediaDevices && navigator.mediaDevices.addEventListener) {
@@ -1148,9 +1210,13 @@
     renderUsb();
   }
 
-  fetch('/api/ping').then(function (r) { return r.json(); }).then(function (j) {
-    S.serverOk = !!j.ok; S.serverSave = S.serverOk; S.serverDir = './captures';
-  }).catch(function () { S.serverOk = false; }).then(renderSaveBox);
+  // Only the local server (npm start) can save to disk; skip the probe on
+  // static hosts such as GitHub Pages so it doesn't log a 404.
+  var isLocal = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
+  (isLocal ? fetch('api/ping').then(function (r) { return r.json(); }) : Promise.reject())
+    .then(function (j) { S.serverOk = !!j.ok; S.serverSave = S.serverOk; S.serverDir = './captures'; })
+    .catch(function () { S.serverOk = false; })
+    .then(renderSaveBox);
 
   syncChain();
   syncGallery();

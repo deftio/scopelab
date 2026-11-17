@@ -1,0 +1,29 @@
+# Deliberately quiet: at most one PR per ecosystem per month, with every
+# update grouped into it. Patch-level npm bumps are skipped entirely.
+# (Security alerts are separate and controlled in repo Settings -> Security.)
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 1
+    groups:
+      all-npm:
+        patterns: ["*"]
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-patch"]
+    commit-message:
+      prefix: deps
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 1
+    groups:
+      all-actions:
+        patterns: ["*"]
+    commit-message:
+      prefix: ci

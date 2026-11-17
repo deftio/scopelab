@@ -2,8 +2,8 @@
 /*
  * server.js -- tiny static server for the USB endoscope viewer.
  *
- *   node server.js            -> http://localhost:8090
- *   PORT=9000 node server.js
+ *   npm start                 -> http://localhost:8642
+ *   PORT=9000 npm start       -> pick another port
  *
  * Why a server at all: camera access (getUserMedia) and WebUSB need a secure
  * context, and http://localhost is one. The server also gives captures a
@@ -16,7 +16,9 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-const PORT = parseInt(process.env.PORT || '8090', 10);
+// Default port lives in package.json ("config": { "port": ... }); npm exposes
+// it as npm_package_config_port. PORT overrides it.
+const PORT = parseInt(process.env.PORT || process.env.npm_package_config_port || '8642', 10);
 const HOST = process.env.HOST || '127.0.0.1';
 const ROOT = __dirname;
 const PUBLIC = path.join(ROOT, 'public');
@@ -102,16 +104,30 @@ const server = http.createServer((req, res) => {
   if (p === '/api/save' && req.method === 'POST') {
     return saveCapture(req, res, url.searchParams.get('name'));
   }
-  if (p.startsWith('/vendor/')) {
-    const f = inside(BW_DIST, p.slice('/vendor/'.length));
+  // Same path bwcli serve uses for the library, so the page works under both.
+  if (p.startsWith('/bw/lib/')) {
+    const f = inside(BW_DIST, p.slice('/bw/lib/'.length));
     return f ? serveFile(res, f) : send(res, 403, 'forbidden');
   }
   const f = inside(PUBLIC, p === '/' ? 'index.html' : p.slice(1));
   return f ? serveFile(res, f) : send(res, 403, 'forbidden');
 });
 
+server.on('error', (e) => {
+  if (e.code === 'EADDRINUSE') {
+    console.error('\n  Port ' + PORT + ' is already in use by another program.');
+    console.error('  Pick another one, e.g.:  PORT=' + (PORT + 10) + ' npm start\n');
+  } else {
+    console.error(e);
+  }
+  process.exit(1);
+});
+
 server.listen(PORT, HOST, () => {
-  console.log('USB endoscope viewer: http://localhost:' + PORT);
-  console.log('Captures are saved to ' + CAPTURES);
-  console.log('Open it in Chrome or Edge (needed for WebUSB).');
+  console.log('');
+  console.log('  USB Endoscope viewer');
+  console.log('  Running on port ' + PORT + ':  http://localhost:' + PORT);
+  console.log('  Captures saved to:  ' + path.relative(process.cwd(), CAPTURES) + '/');
+  console.log('  Open the URL in Chrome or Edge. Press Ctrl+C to stop.');
+  console.log('');
 });
