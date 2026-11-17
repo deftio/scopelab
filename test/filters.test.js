@@ -93,3 +93,12 @@ test('runChain applies enabled stages in order and skips disabled ones', () => {
   ]);
   assert.strictEqual(px(out, 0, 0), 245);
 });
+
+test('LoG zero crossings still find a step edge after heavy blur (regression)', () => {
+  for (const sigma of [0, 2, 4]) {
+    const out = F.byId('laplacian').apply(step(60, 20), Object.assign(F.defaultParams('laplacian'), { sigma, mode: 'zero-crossings' }));
+    let hits = 0;
+    for (let x = 0; x < 60; x++) if (px(out, x, 10) === 255) { hits++; assert.ok(Math.abs(x - 30) <= 2, 'sigma ' + sigma + ' edge at x=' + x); }
+    assert.ok(hits >= 1, 'sigma ' + sigma + ' found no zero crossing');
+  }
+});

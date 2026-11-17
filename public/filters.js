@@ -500,10 +500,14 @@
         { key: 'sigma', label: 'Pre-blur sigma (0 = plain Laplacian)', type: 'range', min: 0, max: 6, step: 0.1, value: 0 },
         { key: 'kernel', label: 'Kernel', type: 'select', options: ['4-neighbour', '8-neighbour'], value: '4-neighbour' },
         { key: 'mode', label: 'Display', type: 'select', options: ['absolute', 'signed', 'zero-crossings'], value: 'absolute' },
-        { key: 'gain', label: 'Gain', type: 'range', min: 0.5, max: 20, step: 0.5, value: 4 }
+        { key: 'gain', label: 'Gain (absolute / signed)', type: 'range', min: 0.5, max: 20, step: 0.5, value: 4 },
+        { key: 'threshold', label: 'Zero-crossing threshold % (of strong edges)', type: 'range', min: 0, max: 100, step: 1, value: 15 }
       ],
       apply: function (img, p) {
         var w = img.w, h = img.h, n = w * h, g = toGray(img), L = new Float32Array(n), eight = p.kernel === '8-neighbour';
+        // Scale-normalised LoG: blurring by sigma shrinks the response by ~1/sigma^2,
+        // so multiply it back up to keep gain and threshold meaningful at any sigma.
+        var norm = 1 + (p.sigma > 0 ? p.sigma * p.sigma : 0);
         if (p.sigma > 0) g = convolvePlane(g, w, h, gaussKernel(p.sigma));
         for (var y = 0; y < h; y++) {
           var ym = (y > 0 ? y - 1 : 0) * w, y0 = y * w, yp = (y < h - 1 ? y + 1 : h - 1) * w;
@@ -511,12 +515,20 @@
             var xm = x > 0 ? x - 1 : 0, xp = x < w - 1 ? x + 1 : w - 1, c = g[y0 + x];
             var v = g[ym + x] + g[yp + x] + g[y0 + xm] + g[y0 + xp] - 4 * c;
             if (eight) v += g[ym + xm] + g[ym + xp] + g[yp + xm] + g[yp + xp] - 4 * c;
-            L[y0 + x] = v;
+            L[y0 + x] = v * norm;
           }
         }
         var m = new Float32Array(n), i;
         if (p.mode === 'zero-crossings') {
-          var thr = 40 / p.gain;
+          // Adaptive threshold: a percentage of the 99.5th percentile of |LoG|,
+          // so it tracks scene contrast and blur instead of absolute units.
+          var maxAbs = 0, k;
+          for (k = 0; k < n; k++) { var av = L[k] < 0 ? -L[k] : L[k]; if (av > maxAbs) maxAbs = av; }
+          var bins = new Uint32Array(1024), scale = maxAbs > 0 ? 1023 / maxAbs : 0;
+          for (k = 0; k < n; k++) bins[((L[k] < 0 ? -L[k] : L[k]) * scale) | 0]++;
+          var want = n * 0.995, acc = 0, p995 = maxAbs;
+          for (k = 0; k < 1024; k++) { acc += bins[k]; if (acc >= want) { p995 = (k + 1) / scale; break; } }
+          var thr = 2 * p995 * (p.threshold == null ? 15 : p.threshold) / 100;
           for (i = 0; i < n; i++) {
             var xx = i % w, a = L[i];
             var r = xx < w - 1 ? L[i + 1] : a, d = i + w < n ? L[i + w] : a;

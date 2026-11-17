@@ -1,5 +1,5 @@
 /*
- * app.js -- USB endoscope viewer. UI is built entirely with bitwrench (TACO
+ * app.js -- ScopeLab, a USB endoscope viewer. UI is built entirely with bitwrench (TACO
  * objects + BCCL components); image processing lives in filters.js.
  *
  * Data path:
@@ -61,7 +61,9 @@
       '.endo_opts .bw_bccl_form_check': { margin: '0' },
       '.endo_opts .bw_bccl_form_control': { width: 'auto' },
       '.endo_stage_head': { display: 'flex', alignItems: 'center', gap: '6px' },
-      '.endo_stage_head .bw_bccl_form_check': { flex: '1', margin: '0', fontWeight: '600' },
+      '.endo_stage_head .bw_bccl_form_check': { flex: '1', margin: '0', fontWeight: '600', minWidth: '0' },
+      '.endo_stage_head .bw_bccl_btn': { padding: '1px 6px', lineHeight: '1.3' },
+      '#st_cam': { maxWidth: '260px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', verticalAlign: 'middle' },
       '.endo_stage_body': { marginTop: '6px' },
       '.endo_stage_ms': { fontSize: '0.75rem', fontFamily: 'ui-monospace, Menlo, monospace', opacity: '0.7', minWidth: '52px', textAlign: 'right' },
       '.endo_field': { display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px', margin: '6px 0', fontSize: '0.9rem' },
@@ -228,7 +230,7 @@
   function header() {
     return {
       t: 'header', a: { class: 'endo_header' }, c: [
-        { t: 'div', a: { class: 'endo_brand' }, c: [{ t: 'span', a: { class: 'endo_logo' }, c: '◉' }, 'USB Endoscope'] },
+        { t: 'div', a: { class: 'endo_brand' }, c: [{ t: 'span', a: { class: 'endo_logo' }, c: '◉' }, 'ScopeLab'] },
         { t: 'div', a: { class: 'endo_status' }, c: [
           bw.makeBadge({ id: 'st_state', text: 'Stopped', variant: 'secondary' }),
           bw.makeBadge({ id: 'st_res', text: '—', variant: 'secondary' }),
@@ -735,7 +737,7 @@
       bw.toggleClass('endo_view', 'endo_hidden', false);
       bw.patch('btn_start', '■ Stop'); setVariant('btn_start', 'secondary');
       bw.patch('st_state', 'Live'); setVariant('st_state', 'success');
-      bw.patch('st_cam', S.track.label || 'camera'); setVariant('st_cam', isBuiltin(S.track.label) ? 'warning' : 'primary');
+      bw.patch('st_cam', S.track.label || 'camera'); bw.patch('st_cam', { title: S.track.label || 'camera' }); setVariant('st_cam', isBuiltin(S.track.label) ? 'warning' : 'primary');
       updateFreezeUI();
       renderCamInfo();
       renderHwControls();

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /*
- * server.js -- tiny static server for the USB endoscope viewer.
+ * server.js -- tiny static server for ScopeLab, the USB endoscope viewer.
  *
  *   npm start                 -> http://localhost:8642
  *   PORT=9000 npm start       -> pick another port
@@ -125,7 +125,7 @@ server.on('error', (e) => {
 
 server.listen(PORT, HOST, () => {
   console.log('');
-  console.log('  USB Endoscope viewer');
+  console.log('  ScopeLab (USB endoscope viewer)');
   console.log('  Running on port ' + PORT + ':  http://localhost:' + PORT);
   console.log('  Captures saved to:  ' + path.relative(process.cwd(), CAPTURES) + '/');
   console.log('  Open the URL in Chrome or Edge. Press Ctrl+C to stop.');

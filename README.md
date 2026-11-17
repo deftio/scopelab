@@ -1,53 +1,101 @@
-# USB Endoscope viewer
+# ScopeLab
 
-View a USB endoscope (or any webcam) live in your browser. You can stack
-classical image filters, watch live histograms, and save snapshots and video.
-Nothing to install and no account: it runs entirely in the browser, and the
-video never leaves your computer.
+**A live USB endoscope viewer with an image-processing lab, in your browser.**
+Plug in a USB endoscope (or any webcam) and watch it live. Stack classical
+filters such as CLAHE, Canny, Sobel and LoG, read live histograms and line
+profiles, and save snapshots and video. There's nothing to install and no
+account. Everything runs on your computer, and the video never leaves it.
 
-![bitwrench](https://img.shields.io/badge/UI-bitwrench-0d9488) ![no build](https://img.shields.io/badge/build-none-64748b)
+### ▶ [Open ScopeLab](https://deftio.github.io/scopelab/)
+
+[![Deploy](https://github.com/deftio/scopelab/actions/workflows/pages.yml/badge.svg)](https://github.com/deftio/scopelab/actions/workflows/pages.yml)
+[![UI: bitwrench](https://img.shields.io/badge/UI-bitwrench-0d9488)](https://github.com/deftio/bitwrench)
+
+![ScopeLab: live view with CLAHE and sharpening, histogram, stats and line profile](docs/images/hero.jpg)
+
+<sub>Screenshots use a synthetic "inside a corroded pipe" test video, not a real endoscope.</sub>
 
 ---
 
-## 1. Use it online (easiest)
+## What it can do
 
-Open the GitHub Pages site in **Chrome or Edge**:
+### Stack classical filters on the live video
 
-> **https://&lt;your-github-user&gt;.github.io/usb-endoscope/**
+Pick filters from a list or use a one-click preset. They run top to bottom on
+every frame, and each stage shows its own parameters and how many milliseconds
+it costs.
 
-1. Plug in the endoscope.
-2. Click **Start camera** and allow camera access when the browser asks.
-3. If it shows your laptop's built-in camera instead, pick the endoscope in the
-   **Camera** tab. External cameras are marked ★. The app also switches to an
+![The same frame through six filters: raw, CLAHE + sharpen, Canny edges, Sobel direction, LoG zero crossings, false colour](docs/images/filters.jpg)
+
+| Group | Filters |
+|---|---|
+| Tone | Brightness / contrast / gamma / saturation, grayscale, invert, auto levels, histogram equalisation, **CLAHE** (local contrast) |
+| Smooth | **Gaussian**, box, **median** (3×3 / 5×5), **bilateral** (edge-preserving), sharpen (unsharp mask) |
+| Edges | **Sobel**, Scharr, Prewitt (magnitude / x / y / direction as colour), **Laplacian / LoG** (absolute / signed / zero crossings), **Canny** (alone or drawn over the image), emboss |
+| Segment | Threshold (manual or automatic **Otsu**), morphology (dilate, erode, open, close, gradient, top-hat), false colour (inferno, viridis, turbo, jet, bone) |
+
+Presets: **Enhance** (CLAHE + sharpen), **Denoise**, **Canny overlay**,
+**Sobel**, **LoG**, **Heat map**.
+
+### Compare, measure, inspect
+
+Wipe or side-by-side compare shows raw and processed together. Under the
+picture, a live **histogram** (R/G/B/brightness, linear or log) comes with
+mean, std, median, min, max and clipping statistics, next to a **line
+profile** that you move by clicking the image. A **pixel probe** shows the
+values under the mouse.
+
+![Wipe compare between raw and CLAHE + Canny overlay, with crosshair](docs/images/compare.jpg)
+
+### Picture mode, snapshots and recording
+
+Press `P` and the picture fills the window. The controls hide behind a small
+bar that appears when you hover. Take snapshots with `Space` and record video
+with `R`, freeze a frame with `F`, or go fullscreen with `Enter`.
+
+![Picture mode: the image fills the window, with a floating control bar](docs/images/picture.jpg)
+
+---
+
+## Get started
+
+### 1. Use it online (easiest)
+
+1. Open **[deftio.github.io/scopelab](https://deftio.github.io/scopelab/)** in
+   **Chrome or Edge**.
+2. Plug in the endoscope.
+3. Click **Start camera** and allow camera access when the browser asks.
+4. If you see your laptop's built-in camera instead, pick the endoscope in the
+   **Camera** tab (external cameras are marked ★). The app also switches to an
    endoscope automatically when you plug one in.
 
 > Safari and Firefox work for viewing, filters and snapshots. The **USB** tab
 > needs Chrome or Edge (WebUSB).
 
-## 2. Run it on your own computer
+### 2. Run it on your own computer
 
 You need [Node.js](https://nodejs.org) 20 or newer.
 
 ```bash
-git clone https://github.com/<your-github-user>/usb-endoscope.git
-cd usb-endoscope
+git clone https://github.com/deftio/scopelab.git
+cd scopelab
 npm install
 npm start
 ```
 
-The terminal prints the address, for example:
+The terminal prints the address:
 
 ```
-  USB Endoscope viewer
+  ScopeLab (USB endoscope viewer)
   Running on port 8642:  http://localhost:8642
   Captures saved to:  captures/
 ```
 
-Open that address in Chrome or Edge. Press **Ctrl+C** in the terminal to stop.
+Open that address in Chrome or Edge. Press **Ctrl+C** to stop.
 
 | Command | What it does |
 |---|---|
-| `npm start` | Runs the app on port **8642**. Snapshots and recordings are also saved to the `captures/` folder |
+| `npm start` | Runs the app on port **8642**. Snapshots and recordings are also saved to `captures/` |
 | `npm run dev` | Same app, served by bitwrench's own `bwcli serve` (also uses port 8643). Captures stay in the browser |
 | `npm test` | Runs the image-filter unit tests |
 | `npm run build:pages` | Builds the static site into `_site/`, the same thing GitHub Pages publishes |
@@ -56,24 +104,25 @@ Open that address in Chrome or Edge. Press **Ctrl+C** in the terminal to stop.
 for example, `PORT=9000 npm start`. To change the default, edit
 `"config": { "port": 8642 }` in `package.json`.
 
-## 3. Publish your own copy on GitHub Pages
+### 3. Publish your own copy (fork)
 
-The repo already includes the workflow that does this
-(`.github/workflows/pages.yml`). Turn it on once:
+The repo includes the workflow that publishes to GitHub Pages
+(`.github/workflows/pages.yml`). Turn it on once in your fork:
 
-1. Push the repo to GitHub.
-2. On GitHub, go to **Settings → Pages → Build and deployment → Source** and
-   choose **GitHub Actions**.
-   (Or from a terminal: `gh api repos/<user>/usb-endoscope/pages -X POST -f build_type=workflow`)
-3. Push to `main`, or run the workflow from the **Actions** tab. After about a
-   minute the site is live at `https://<user>.github.io/usb-endoscope/`.
+1. On GitHub, go to **Settings → Pages → Build and deployment → Source** and
+   choose **GitHub Actions**. **Don't** choose "Deploy from a branch": the page
+   needs the build step, which adds bitwrench.
+   (From a terminal: `gh api repos/<user>/scopelab/pages -X PUT -f build_type=workflow`)
+2. Push to `main`, or run **Deploy to GitHub Pages** from the **Actions** tab.
+   After about a minute it's live at `https://<user>.github.io/scopelab/`.
 
 Each push to `main` then tests and redeploys it. Pages is served over HTTPS,
-which the browser requires for camera and USB access.
+which browsers require for camera and USB access.
 
 ---
 
-## What you can do
+## Feature reference
+
 
 **Camera**
 - Pick the camera, resolution (320×240 up to 1080p or max) and frame rate.
@@ -191,6 +240,8 @@ endoscope (USB Video Class) -> getUserMedia -> <video>
 | File | What it is |
 |---|---|
 | `public/index.html` | The page. Loads bitwrench, then the two scripts below |
+| `public/.nojekyll` | Tells GitHub Pages to serve the files as they are, with no Jekyll processing |
+| `docs/images/` | README screenshots |
 | `public/app.js` | The UI (built only with [bitwrench](https://github.com/deftio/bitwrench)) and the frame loop |
 | `public/filters.js` | All filters, histograms and stats, as plain functions. Runs in the browser and in Node |
 | `server.js` | Small local server for `npm start`, with no dependencies. Serves the page and bitwrench, and saves captures |
@@ -204,4 +255,4 @@ endoscope (USB Video Class) -> getUserMedia -> <video>
 bitwrench is a normal npm dependency, pinned by `package-lock.json`. The local
 servers serve it from `node_modules`, and the Pages build copies the same file
 into the site. Every path in the page is relative, so the site works at a
-domain root or under `/usb-endoscope/`.
+domain root or under `/scopelab/`.

@@ -48,7 +48,7 @@ function checkFree(port) {
     if (!announced && /Ready/.test(String(chunk))) {
       announced = true;
       console.log('');
-      console.log('  USB Endoscope viewer (bwcli serve)');
+      console.log('  ScopeLab (bwcli serve)');
       console.log('  Running on port ' + PORT + ':  http://localhost:' + PORT);
       console.log('  Captures stay in the browser (use npm start to also save them to disk).');
       console.log('  Press Ctrl+C to stop.');

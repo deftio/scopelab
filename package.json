@@ -1,7 +1,7 @@
 {
-  "name": "usb-endoscope",
+  "name": "scopelab",
   "version": "1.0.0",
-  "description": "Live USB endoscope viewer with filters, histograms and captures (bitwrench UI)",
+  "description": "ScopeLab: live USB endoscope viewer with classical image filters, histograms and captures (bitwrench UI)",
   "private": true,
   "main": "server.js",
   "config": {
@@ -20,5 +20,10 @@
   "author": "",
   "dependencies": {
     "bitwrench": "^2.1.14"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deftio/scopelab.git"
+  },
+  "homepage": "https://deftio.github.io/scopelab/"
 }
