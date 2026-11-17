@@ -1,0 +1,11 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/deftio/scopelab/security/advisories/new
+    about: Report privately through a GitHub security advisory. Please do not open a public issue.
+  - name: Camera not showing up?
+    url: https://github.com/deftio/scopelab#troubleshooting
+    about: Most "my endoscope isn't detected" problems are cables, adapters or the macOS accessory permission. Check the troubleshooting guide first.
+  - name: Contributing guide
+    url: https://github.com/deftio/scopelab/blob/main/CONTRIBUTING.md
+    about: Setup, code rules, adding a filter, and what a pull request needs.

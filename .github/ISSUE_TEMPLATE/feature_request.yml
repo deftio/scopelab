@@ -1,0 +1,45 @@
+name: Feature request
+description: Propose a filter, a tool or a capability ScopeLab doesn't have
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What are you trying to do?
+      description: |
+        Describe the situation, not the solution. What are you inspecting or
+        measuring, and where does ScopeLab get in the way?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - A new filter or image operation
+        - Measurement / analysis (histogram, profile, probe...)
+        - Capture (snapshots, recording)
+        - Camera or USB support
+        - Layout / usability
+        - Docs
+        - Not sure
+    validations:
+      required: false
+
+  - type: textarea
+    id: reference
+    attributes:
+      label: References
+      description: For a filter or algorithm, a link to a paper, the OpenCV equivalent, or an example image helps.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: constraints
+    attributes:
+      label: Constraints you have considered
+      description: Optional, but these usually decide it.
+      options:
+        - label: This works in the browser without uploading video anywhere
+        - label: This does not need a build step or a new runtime dependency

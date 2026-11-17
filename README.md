@@ -10,6 +10,7 @@ account. Everything runs on your computer, and the video never leaves it.
 
 [![Deploy](https://github.com/deftio/scopelab/actions/workflows/pages.yml/badge.svg)](https://github.com/deftio/scopelab/actions/workflows/pages.yml)
 [![UI: bitwrench](https://img.shields.io/badge/UI-bitwrench-0d9488)](https://github.com/deftio/bitwrench)
+[![License: BSD-2-Clause](https://img.shields.io/badge/license-BSD--2--Clause-64748b)](LICENSE.txt)
 
 ![ScopeLab: live view with CLAHE and sharpening, histogram, stats and line profile](docs/images/hero.jpg)
 
@@ -256,3 +257,12 @@ bitwrench is a normal npm dependency, pinned by `package-lock.json`. The local
 servers serve it from `node_modules`, and the Pages build copies the same file
 into the site. Every path in the page is relative, so the site works at a
 domain root or under `/scopelab/`.
+
+## Contributing, security and license
+
+- Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md), including
+  how to add a filter.
+- Please report security issues privately. See [SECURITY.md](SECURITY.md).
+- This project follows the [Code of Conduct](CODE_OF_CONDUCT.md).
+- ScopeLab is released under the [BSD 2-Clause license](LICENSE.txt).
+  Copyright (c) 2026 M. A. Chatterjee.
